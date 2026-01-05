@@ -7,3 +7,4 @@ node_modules/
 
 test-db-connection.js
 test-create-table.js
+test-drop-table.js
