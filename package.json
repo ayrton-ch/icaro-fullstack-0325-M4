@@ -1,0 +1,19 @@
+{
+  "name": "icaro-fullstack-0325-m4",
+  "version": "1.0.0",
+  "description": "Trabajo practico icaro backend M4",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayrton-ch/icaro-fullstack-0325-M4.git"
+  },
+  "author": "ayrton-ch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayrton-ch/icaro-fullstack-0325-M4/issues"
+  },
+  "homepage": "https://github.com/ayrton-ch/icaro-fullstack-0325-M4#readme"
+}
