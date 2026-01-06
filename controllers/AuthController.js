@@ -5,12 +5,12 @@ const { JWT_SECRET, JWT_EXPIRES_IN } = require("../middlewares/authMiddleware");
 // POST /auth/register - Registrar nuevo usuario
 async function register(req, res) {
   try {
-    const { full_name, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     // Validar que los campos requeridos estén presentes
-    if (!full_name || !email || !password) {
+    if (!name || !email || !password) {
       return res.status(400).json({
-        error: "Los campos full_name, email y password son obligatorios",
+        error: "Los campos name, email y password son obligatorios",
       });
     }
 
