@@ -5,7 +5,10 @@ const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const TrainerController = require("./controllers/TrainerController");
+
+// Importar rutas
+const authRoutes = require("./routes/authRoutes");
+const trainerRoutes = require("./routes/trainerRoutes");
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
@@ -30,11 +33,21 @@ app.get("/", function (request, response) {
   response.render("index", { title: "Bienvenido a Icaro" });
 });
 
-// Trainer
-app.get("/trainers", TrainerController.index);
-app.get("/trainers/:id", TrainerController.show);
-app.post("/trainers", TrainerController.create);
-app.patch("/trainers/:id", TrainerController.update);
-app.delete("/trainers/:id", TrainerController.destroy);
+// Rutas de autenticación (públicas y protegidas)
+app.use("/auth", authRoutes);
 
-app.listen(3000);
+// Rutas de trainers
+app.use("/trainers", trainerRoutes);
+
+// Middleware de manejo de errores global
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    error: "Error interno del servidor",
+    message: err.message 
+  });
+});
+
+app.listen(3000, () => {
+  console.log("Servidor corriendo en http://localhost:3000");
+});
