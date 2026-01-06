@@ -53,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "personal_trainers",
       timestamps: true,
+      underscored: true,
       hooks: {
         beforeCreate: async (trainer) => {
           if (trainer.password) {
