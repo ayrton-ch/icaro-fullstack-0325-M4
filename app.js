@@ -6,6 +6,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
+const logger = require("./config/logger");
+
 // Importar rutas
 const authRoutes = require("./routes/authRoutes");
 const trainerRoutes = require("./routes/trainerRoutes");
@@ -30,7 +32,7 @@ app.use(
 // Ruta raíz: /
 app.get("/", function (req, res) {
   const user = req.session.user;
-  console.log("Usuario en sesión:");
+  logger.info("Usuario en sesión:", user);
   console.log(user);
   res.render("login", {
     title: "Bienvenido a Icaro",
@@ -74,16 +76,13 @@ app.use("/auth", authRoutes);
 // Rutas de trainers
 app.use("/trainers", trainerRoutes);
 
-// Middleware de manejo de errores global
+// middleware de manejo de errores global
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    error: "Error interno del servidor",
-    message: err.message,
-  });
+  logger.error(err.stack);
+  res.status(500).json({ error: "Error interno" });
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  logger.info(`Servidor corriendo en http://localhost:${PORT}`);
 });
