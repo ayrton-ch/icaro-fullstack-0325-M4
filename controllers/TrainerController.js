@@ -17,7 +17,7 @@ async function show(req, res) {
     const trainer = await PersonalTrainer.findByPk(id);
 
     if (!trainer) {
-      return res.status(404).json({ error: "Trainer not found" });
+      return res.status(404).json({ error: "Entrenador no encontrado" });
     }
 
     res.json(trainer);
@@ -43,7 +43,7 @@ async function update(req, res) {
     const trainer = await PersonalTrainer.findByPk(id);
 
     if (!trainer) {
-      return res.status(404).json({ error: "Trainer not found" });
+      return res.status(404).json({ error: "Entrenador no encontrado" });
     }
 
     await trainer.update(req.body);
@@ -60,11 +60,11 @@ async function destroy(req, res) {
     const trainer = await PersonalTrainer.findByPk(id);
 
     if (!trainer) {
-      return res.status(404).json({ error: "Trainer not found" });
+      return res.status(404).json({ error: "Entrenador no encontrado" });
     }
 
     await trainer.destroy();
-    res.json({ message: "Trainer deleted successfully" });
+    res.json({ message: "Entrenador eliminado exitosamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

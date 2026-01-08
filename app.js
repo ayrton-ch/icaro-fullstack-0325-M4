@@ -14,12 +14,11 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
 // middlewares
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "http://localhost:" + process.env.PORT }));
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static("public")); // name.jpg
 app.use(cookieParser(process.env.COOKIE_SECRET));
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -29,8 +28,44 @@ app.use(
 );
 
 // Ruta raíz: /
-app.get("/", function (request, response) {
-  response.render("index", { title: "Bienvenido a Icaro" });
+app.get("/", function (req, res) {
+  const user = req.session.user;
+  console.log("Usuario en sesión:");
+  console.log(user);
+  res.render("login", {
+    title: "Bienvenido a Icaro",
+    user: user || null,
+  });
+});
+
+// Ruta de registro: /register
+app.get("/register", function (req, res) {
+  const user = req.session.user;
+  res.render("register", {
+    title: "Registro",
+    user: user || null,
+  });
+});
+
+// Ruta para ver el perfil del usuario
+app.get("/profile", function (req, res) {
+  const user = req.session.user;
+  if (!user) {
+    return res.redirect("/");
+  }
+  res.render("profile");
+});
+
+// Ruta para cerrar sesión
+app.get("/logout", function (req, res) {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al cerrar sesión" });
+    }
+    res.clearCookie("connect.sid"); // Limpiar cookie explícitamente
+    res.clearCookie("jwt_token"); // Limpiar cookie JWT
+    res.redirect("/");
+  });
 });
 
 // Rutas de autenticación (públicas y protegidas)
@@ -42,12 +77,13 @@ app.use("/trainers", trainerRoutes);
 // Middleware de manejo de errores global
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ 
+  res.status(500).json({
     error: "Error interno del servidor",
-    message: err.message 
+    message: err.message,
   });
 });
 
-app.listen(3000, () => {
-  console.log("Servidor corriendo en http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
