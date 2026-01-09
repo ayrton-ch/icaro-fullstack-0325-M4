@@ -12,6 +12,10 @@ const logger = require("./config/logger");
 const authRoutes = require("./routes/authRoutes");
 const trainerRoutes = require("./routes/trainerRoutes");
 
+// Swagger
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger.js");
+
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
@@ -81,6 +85,8 @@ app.use((err, req, res, next) => {
   logger.error(err.stack);
   res.status(500).json({ error: "Error interno" });
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
