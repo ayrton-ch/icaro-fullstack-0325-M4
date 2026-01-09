@@ -66,17 +66,39 @@ router.get("/:id", authenticateToken, TrainerController.show);
  *             required:
  *               - name
  *               - email
+ *               - password
+ *               - phone_number
+ *               - specialization
+ *               - gym_name
+ *               - session_price
+ *               - certifications
  *             properties:
  *               name:
  *                 type: string
- *                 example: María González
+ *                 example: Pedro González
  *               email:
  *                 type: string
  *                 format: email
- *                 example: maria@example.com
- *               specialty:
+ *                 example: pedro@gmail.com
+ *               password:
  *                 type: string
- *                 example: Fitness y nutrición
+ *                 format: password
+ *                 example: "123456"
+ *               phone_number:
+ *                 type: string
+ *                 example: "+1234567890"
+ *               specialization:
+ *                 type: string
+ *                 example: "Musculación"
+ *               gym_name:
+ *                 type: string
+ *                 example: "Gimnasio Fit"
+ *               session_price:
+ *                 type: number
+ *                 example: 50
+ *               certifications:
+ *                 type: string
+ *                 example: "Zumba Instructor, Spinning Certified"
  *     responses:
  *       201:
  *         description: Entrenador creado exitosamente
