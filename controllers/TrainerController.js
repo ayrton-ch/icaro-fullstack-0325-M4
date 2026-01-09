@@ -32,7 +32,7 @@ async function create(req, res) {
     const trainer = await PersonalTrainer.create(req.body);
     res.status(201).json(trainer);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 }
 
@@ -49,7 +49,7 @@ async function update(req, res) {
     await trainer.update(req.body);
     res.json(trainer);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 }
 

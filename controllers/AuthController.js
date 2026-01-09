@@ -111,10 +111,10 @@ async function login(req, res) {
       if (isHtmlRequest) {
         return res.render("login", {
           title: "Bienvenido a Icaro",
-          error: "Credenciales inválidas",
+          error: "Email inválido",
         });
       }
-      return res.status(401).json({ error: "Credenciales inválidas" });
+      return res.status(401).json({ error: "Email inválido" });
     }
 
     // Verificar contraseña
@@ -124,10 +124,10 @@ async function login(req, res) {
       if (isHtmlRequest) {
         return res.render("login", {
           title: "Bienvenido a Icaro",
-          error: "Credenciales inválidas",
+          error: "Password inválido",
         });
       }
-      return res.status(401).json({ error: "Credenciales inválidas" });
+      return res.status(401).json({ error: "Password inválido" });
     }
 
     // Generar JWT
@@ -178,7 +178,6 @@ async function login(req, res) {
 // GET /auth/profile - Obtener perfil del usuario autenticado
 async function getProfile(req, res) {
   try {
-    console.log("[getProfile] req.user:", req.user);
     const trainer = await PersonalTrainer.findByPk(req.user.id);
 
     if (!trainer) {
@@ -213,7 +212,7 @@ async function updateProfile(req, res) {
       user: trainerData,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 }
 

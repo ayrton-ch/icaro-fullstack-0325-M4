@@ -26,23 +26,45 @@ const {
  *               - name
  *               - email
  *               - password
+ *               - phone_number
+ *               - specialization
+ *               - gym_name
+ *               - session_price
+ *               - certifications
  *             properties:
  *               name:
  *                 type: string
- *                 example: Juan Pérez
+ *                 example: Pedro González
  *               email:
  *                 type: string
  *                 format: email
- *                 example: juan@example.com
+ *                 example: pedro@gmail.com
  *               password:
  *                 type: string
  *                 format: password
- *                 example: password123
+ *                 example: "123456"
+ *               phone_number:
+ *                 type: string
+ *                 example: "+1234567890"
+ *               specialization:
+ *                 type: string
+ *                 example: "Musculación"
+ *               gym_name:
+ *                 type: string
+ *                 example: "Gimnasio Fit"
+ *               session_price:
+ *                 type: number
+ *                 example: 50
+ *               certifications:
+ *                 type: string
+ *                 example: "Zumba Instructor, Spinning Certified"
  *     responses:
  *       201:
  *         description: Usuario registrado exitosamente
  *       400:
  *         description: Datos inválidos
+ *       500:
+ *         description: Error en el servidor
  */
 router.post("/register", registerValidator, AuthController.register);
 
@@ -66,16 +88,31 @@ router.post("/register", registerValidator, AuthController.register);
  *               email:
  *                 type: string
  *                 format: email
- *                 example: juan@example.com
+ *                 example: pedro@gmail.com
  *               password:
  *                 type: string
  *                 format: password
- *                 example: password123
+ *                 example: "123456"
  *     responses:
  *       200:
  *         description: Login exitoso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *       400:
+ *         description: Datos faltantes
  *       401:
  *         description: Credenciales inválidas
+ *       500:
+ *         description: Error en el servidor
  */
 router.post("/login", loginValidator, AuthController.login);
 
@@ -93,8 +130,10 @@ router.post("/login", loginValidator, AuthController.login);
  *     responses:
  *       200:
  *         description: Perfil obtenido exitosamente
- *       401:
- *         description: No autorizado
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error en el servidor
  */
 router.get("/profile", authenticateToken, AuthController.getProfile);
 
@@ -116,16 +155,18 @@ router.get("/profile", authenticateToken, AuthController.getProfile);
  *             properties:
  *               name:
  *                 type: string
- *                 example: Juan Carlos Pérez
+ *                 example: Pedro González
  *               email:
  *                 type: string
  *                 format: email
- *                 example: juancarlos@example.com
+ *                 example: pedro@gmail.com
  *     responses:
  *       200:
  *         description: Perfil actualizado exitosamente
- *       401:
- *         description: No autorizado
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error en el servidor
  */
 router.patch("/profile", authenticateToken, AuthController.updateProfile);
 
@@ -141,8 +182,10 @@ router.patch("/profile", authenticateToken, AuthController.updateProfile);
  *     responses:
  *       200:
  *         description: Perfil eliminado exitosamente
- *       401:
- *         description: No autorizado
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error en el servidor
  */
 router.delete("/profile", authenticateToken, AuthController.deleteProfile);
 

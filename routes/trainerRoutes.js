@@ -17,8 +17,8 @@ const { authenticateToken } = require("../middlewares/authMiddleware");
  *     responses:
  *       200:
  *         description: Lista de entrenadores obtenida exitosamente
- *       401:
- *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
  */
 router.get("/", authenticateToken, TrainerController.index);
 
@@ -43,8 +43,8 @@ router.get("/", authenticateToken, TrainerController.index);
  *         description: Entrenador obtenido exitosamente
  *       404:
  *         description: Entrenador no encontrado
- *       401:
- *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
  */
 router.get("/:id", authenticateToken, TrainerController.show);
 
@@ -80,10 +80,8 @@ router.get("/:id", authenticateToken, TrainerController.show);
  *     responses:
  *       201:
  *         description: Entrenador creado exitosamente
- *       400:
- *         description: Datos inválidos
- *       401:
- *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
  */
 router.post("/", authenticateToken, TrainerController.create);
 
@@ -122,8 +120,8 @@ router.post("/", authenticateToken, TrainerController.create);
  *         description: Entrenador actualizado exitosamente
  *       404:
  *         description: Entrenador no encontrado
- *       401:
- *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
  */
 router.patch("/:id", authenticateToken, TrainerController.update);
 
@@ -148,8 +146,8 @@ router.patch("/:id", authenticateToken, TrainerController.update);
  *         description: Entrenador eliminado exitosamente
  *       404:
  *         description: Entrenador no encontrado
- *       401:
- *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
  */
 router.delete("/:id", authenticateToken, TrainerController.destroy);
 
