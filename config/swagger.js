@@ -1,4 +1,5 @@
 const swaggerJSDoc = require("swagger-jsdoc");
+const path = require("path");
 
 const swaggerSpec = swaggerJSDoc({
   definition: {
@@ -14,8 +15,20 @@ const swaggerSpec = swaggerJSDoc({
         description: "Development server",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   },
-  apis: ["./routes/*.js", "./controllers/*.js"], // Path to the API docs
+  apis: [
+    path.join(__dirname, "../routes/*.js"),
+    path.join(__dirname, "../controllers/*.js"),
+  ],
 });
 
 module.exports = swaggerSpec;
