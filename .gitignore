@@ -3,3 +3,5 @@ node_modules/
 *.log
 *.pdf
 .git
+error.log
+combined.log
