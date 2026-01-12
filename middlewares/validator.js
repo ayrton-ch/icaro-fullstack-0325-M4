@@ -12,7 +12,7 @@ function isEmail(str) {
   }
 }
 
-// validar que el password tenga entre 8 y 12 caracteres
+// validar que el password tenga entre 6 y 12 caracteres
 function minLength(str, min) {
   if (str.length < min) {
     throw `El password requiere al menos ${min} caracteres`;
